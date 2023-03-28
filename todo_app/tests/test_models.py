@@ -11,10 +11,6 @@ class ToDoItemTestCase(TestCase):
             #Set up non-modified objects used by all test methods
             ToDoItem.objects.create(title='Learn Django in a week', description='Start with putting on your supercostume')
 
-    # def setUp(self):
-        # ToDoItem.objects.create(name="lion", sound="roar")
-        # ToDoItem.objects.create(name="cat", sound="meow")
-
     def test_title_label(self):
             toDoItem=ToDoItem.objects.get(id=1)
             field_label = toDoItem._meta.get_field('title').verbose_name
