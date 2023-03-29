@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="todo-item">
+	<header>
+		<h2>{{ todo.title }}</h2>
+		<span class="badge {% if task.completed %}badge-completed{%endif%}">
+			{% if todo.completed %} Completed {%else%} Pending {%endif%}
+		</span>
+        <p>{{todo.description}}</p>
+        <span> Due {{ todo.due_date | date:"l, F j" }}</span>
+	</header>
+</div>
+
+<div>
+    <div
+        role="button"
+        onclick="location.href='{% url "item-update" todo.id %}'">
+        Edit item
+        
+    </div>
+</div>
+
+{% endblock %}

@@ -2,6 +2,7 @@
 
 from django.views.generic import (
     ListView,
+    DetailView,
     CreateView,
     UpdateView,
 )
@@ -16,8 +17,21 @@ class ItemListView(ListView):
 
     # def get_context_data(self):
     #     context = super().get_context_data()
-    #     context["todo_list"] = ToDoList.objects.get(id=self.kwargs["list_id"])
     #     return context
+
+class ItemDetailView(DetailView):
+    model = ToDoItem
+    template_name = "todo_app/todoitem_detail.html"
+    context_object_name = 'todo'
+
+    # def get_context_data(self):
+    #     context = super().get_context_data()
+    #     return context
+
+    def get_reverse_url(self):
+        return reverse(
+            "item", args=[str(self.id)]
+        )
 
 class ItemCreate(CreateView):
     model = ToDoItem
@@ -25,6 +39,7 @@ class ItemCreate(CreateView):
         "title",
         "description",
         "due_date",
+        "completed",
     ]
 
     def get_initial(self):
@@ -49,6 +64,7 @@ class ItemUpdate(UpdateView):
         "title",
         "description",
         "due_date",
+        "completed",
     ]
 
     def get_context_data(self):
@@ -59,3 +75,4 @@ class ItemUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse("index")    
+        # return reverse("item", args=[self.object.todoitem_detail_id]) how to get the id of the detail page?
