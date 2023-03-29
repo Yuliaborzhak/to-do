@@ -1,12 +1,13 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Simple.css-->
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
     <title>Django To-do Lists</title>
 </head>
 
@@ -22,5 +23,5 @@
         {% endblock %}
     </div>
 </body>
-
+<script src="{% static 'scripts.js' %}"></script>
 </html>

@@ -1,45 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
 <!--index.html-->
-<!-- {% if object_list %}
-<h3>All my tasks</h3>
-{% endif %}
-<ul>
-    {% for todoitem in object_list %}
-    <li>
-        <div>
-            {{ todoitem.title }}
-        </div>
-    </li>
-    {% empty %}
-    <h4>You have no tasks!</h4>
-    {% endfor %}
-</ul> -->
-<div>
-    <div>
-        <ul>
-            {% for todo in object_list %}
-            <li>
-                <div>
-                    <div
-                        role="button"
-                        onclick="location.href='{% url "item-update" todo.id %}'">
-                        {{ todo.title }}
-                        (Due {{ todo.due_date | date:"l, F j" }})
-                    </div>
+
+<div class="list-wrapper">
+    <ul class="list">
+        {% for todo in object_list %}
+        <li class="list__item">
+            <div class="list__item-inner">
+                <div class="list__item-toggle-wrapper">
+                    <input type="checkbox" name="completed" class="list__item-toggle">
+                </div>    
+                <div
+                    role="button"
+                    onclick="location.href='{% url "item" todo.id %}'"
+                    class="{% if todo.completed%}completed{%endif%}">{{ todo.title }}
                 </div>
-            </li>
-            {% empty %}
-            <p>There are no to-do items in your list.</p>
-            {% endfor %}
-        </ul>
-        <p>
-            <input
-                value="Add a new item"
-                type="button"
-                onclick="location.href='{% url "item-add" %}'"
-            />
-        </p>
-    </div>
+                
+
+            </div>
+            <!-- <div  class="list__item-controls">
+                <a href="#"><i class="bi bi-trash"></i> </a>
+                <a href="#"><i class="bi bi-pencil-square"></i></a>
+            </div> -->
+        </li>
+        {% empty %}
+        <p>There are no to-do items in your list.</p>
+        {% endfor %}
+    </ul>
+    <p>
+        <input
+            value="Add a new item"
+            type="button"
+            onclick="location.href='{% url "item-add" %}'"
+        />
+    </p>
+ 
 </div>
 {% endblock %}
