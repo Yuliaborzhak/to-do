@@ -20,12 +20,12 @@ class ToDoItem(models.Model):
     description = models.TextField(null=True, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(default=one_week_hence)
-    # todo_list = models.ForeignKey(ToDoList, on_delete=models.CASCADE)
+    completed = models.BooleanField(default=False)
 
-    def get_absolute_url(self):
-        return reverse(
-            "item-update", args=[str(self.id)]
-        )
+    # def get_absolute_url(self):
+    #     return reverse(
+    #         "item", args=[str(self.id)]
+    #     )
 
     def __str__(self):
         return f"{self.title}: due {self.due_date}"
