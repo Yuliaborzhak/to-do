@@ -11,7 +11,11 @@ urlpatterns = [
     path(
         "login/", 
         views.login_view, 
-        name="login"),    
+        name="login"),
+    path(
+        "logout/", 
+        views.logout_view, 
+        name="logout"),      
     path(
         "item/<int:pk>/",
         views.ItemDetailView.as_view(),
