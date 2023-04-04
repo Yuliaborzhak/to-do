@@ -6,14 +6,16 @@ from django.urls import reverse
 def one_week_hence():
     return timezone.now() + timezone.timedelta(days=7)
 
-# class ToDoList(models.Model):
-#     title = models.CharField(max_length=100, unique=True)
-
-#     def get_absolute_url(self):
-#         return reverse("list", args=[self.id])
-
-#     def __str__(self):
-#         return self.title
+def mark_as_completed(request, pk):
+    subtask = SubTask.objects.get(pk=pk)
+    if request.method == "POST":
+        subtask.title = request.POST.get("title")
+        if request.POST.get("completed") == 'on':
+            subtask.completed = True
+        else:
+            subtask.completed = False
+        subtask.save()
+        return HttpResponseRedirect(f"/edit-task/{subtask.task.id}/")
 
 class ToDoItem(models.Model):
     title = models.CharField(max_length=100)

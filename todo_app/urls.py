@@ -9,6 +9,10 @@ urlpatterns = [
         views.ItemListView.as_view(), 
         name="index"),
     path(
+        "login/", 
+        views.login_view, 
+        name="login"),    
+    path(
         "item/<int:pk>/",
         views.ItemDetailView.as_view(),
         name="item"),

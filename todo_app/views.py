@@ -8,8 +8,26 @@ from django.views.generic import (
 )
 from .models import ToDoItem
 from django.urls import reverse
-
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 # Create your views here.
+
+def login_view(request):
+  context = {
+    "login_view": "active"
+  }
+  if request.method == "POST":
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return redirect("index")
+    else:
+        return HttpResponse("invalid credentials")
+    
+  return render(request, "registration/login.html", context)
 
 class ItemListView(ListView):
     model = ToDoItem
