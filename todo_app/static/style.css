@@ -1,0 +1,7 @@
+.list__item {
+    background-color: #b9ce59
+}
+
+.list__item.completed {
+    background-color: #4bc5c6
+}
