@@ -1,19 +1,33 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "style.css" %}">
+{% endblock head %}
+
 {% block content %}
 <!--index.html-->
 
 <div class="list-wrapper">
     <ul class="list">
         {% for todo in object_list %}
-        <li class="list__item">
+        <li class="list__item {% if todo.completed%}completed{%endif%}">
             <div class="list__item-inner">
-                <div class="list__item-toggle-wrapper">
-                    <input type="checkbox" name="completed" class="list__item-toggle">
+                <div class="list__item-complete-btn">
+                    {% if todo.completed == False %}
+                    <a
+                        class="btn" 
+                        href="{% url "item-completed" todo.pk %}">
+                        Complete
+                    </a>
+                    {%else%} 
+                    <span>Completed </span>
+                    {%endif%}
                 </div>    
                 <div
                     role="button"
                     onclick="location.href='{% url "item" todo.id %}'"
-                    class="{% if todo.completed%}completed{%endif%}">{{ todo.title }}
+                   >{{ todo.title }}
                 </div>
                 
 

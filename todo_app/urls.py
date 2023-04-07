@@ -30,6 +30,11 @@ urlpatterns = [
         views.ItemUpdate.as_view(),
         name="item-update",
     ),
+    path(
+        "item/<int:pk>/completed/",
+        views.mark_as_completed,
+        name="item-completed",
+    ),
 
     # CRUD patterns for ToDoItems
     path(

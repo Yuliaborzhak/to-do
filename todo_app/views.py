@@ -37,6 +37,29 @@ def logout_view(request):
   return redirect("index")
 
 
+def mark_as_completed(request, pk):
+    template_name = 'todo_app/completed.html'
+    todo_Item = ToDoItem.objects.get(pk=pk)
+    todo_Item.completed = True
+    # todo_Item_update = ToDoItem.objects.filter(pk=pk).update(completed=True)
+    # task.completed_ = timezone.now()
+    todo_Item.save()
+    return redirect('index')
+
+
+# def mark_as_completed(request, pk):
+#     todo_Item = ToDoItem.objects.get(pk=pk)
+#     if request.method == "POST":
+#         # todo_Item.title = request.POST.get("title")
+#         if request.POST.get("completed") == 'on':
+#             todo_Item.completed = True
+#         else:
+#             todo_Item.completed = False
+#         todo_Item.save()
+#         return HttpResponseRedirect("index")
+
+
+
 class SignUp(CreateView):
    form_class = UserCreationForm
    success_url = reverse_lazy('login')
