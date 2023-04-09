@@ -103,7 +103,7 @@ class ItemCreate(CreateView):
     #     initial_data["todo_list"] = todo_list
         return initial_data
 
-    def get_context_data(self):
+    def get_context_data(self, **kwargs):
         context = super(ItemCreate, self).get_context_data()
         # todo_list = ToDoList.objects.get(id=self.kwargs["list_id"])
         # context["todo_list"] = todo_list
@@ -112,6 +112,9 @@ class ItemCreate(CreateView):
 
     def get_success_url(self):
         return reverse("index")
+
+    
+            
 
 class ItemUpdate(UpdateView):
     model = ToDoItem

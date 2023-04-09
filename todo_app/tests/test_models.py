@@ -1,7 +1,8 @@
-from django.test import TestCase
-
 # Create your tests here.
-
+import datetime
+from django.utils import timezone
+from django.test import TestCase
+from django.core.exceptions import ValidationError
 from todo_app.models import ToDoItem
 
 class ToDoItemTestCase(TestCase):
@@ -35,11 +36,15 @@ class ToDoItemTestCase(TestCase):
             toDoItem=ToDoItem.objects.get(id=1)
             #This will also fail if the urlconf is not defined.
             self.assertEquals(toDoItem.get_absolute_url(),'todo_app/todoitem/1')
-
-
-    # def test_animals_can_speak(self):
-    #     """Animals that can speak are correctly identified"""
-    #     lion = Animal.objects.get(name="lion")
-    #     cat = Animal.objects.get(name="cat")
-    #     self.assertEqual(lion.speak(), 'The lion says "roar"')
-    #     self.assertEqual(cat.speak(), 'The cat says "meow"')
+    
+# Don't know how to  test if in clean()        
+#     def test_clean_exception(self):
+#         toDoItem = ToDoItem.objects.get(id=1)
+#         # due_date = self.due_date.replace(tzinfo=utc)
+#         # today_date = datetime.datetime.today().replace(tzinfo=utc)
+#         with self.assertRaises(ValidationError) as exception_context:
+#             toDoItem.clean()
+#         self.assertEqual(
+#             str(exception_context.exception),
+#             "The date cannot be in the past!"
+#         )    
