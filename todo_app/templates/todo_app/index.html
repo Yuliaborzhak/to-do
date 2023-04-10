@@ -29,7 +29,9 @@
                     onclick="location.href='{% url "item" todo.id %}'"
                    >{{ todo.title }}
                 </div>
-                
+                {% if todo.user %}
+                <span> {{todo.user.username}}</span>
+                {%endif%}
 
             </div>
             <!-- <div  class="list__item-controls">

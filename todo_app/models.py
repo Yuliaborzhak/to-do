@@ -8,7 +8,8 @@ from django.db import models
 from django.urls import reverse
 
 from django import forms
-from django.core.exceptions import ValidationError
+
+from django.contrib.auth.models import User
 
 def one_week_hence():
     return timezone.now() + timezone.timedelta(days=7)
@@ -19,7 +20,13 @@ def clean_due_date(self):
         # if date < datetime.date.today():
         #     raise forms.ValidationError({'bark_volume': ["The date cannot be in the past!",]})
         # return date
-        
+
+def get_superuser():
+    su_user = User.objects.filter(is_superuser=True).first()
+    if su_user:
+        return su_user
+    raise DoesNotExist('Please add Super User')  
+
 class ToDoItem(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=False)
@@ -27,6 +34,12 @@ class ToDoItem(models.Model):
     due_date = models.DateTimeField(default=one_week_hence)
     completed = models.BooleanField(default=False)
     completed_time = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET(get_superuser),
+        related_name="tasks",
+        null=True
+        )
 
     # def get_absolute_url(self):
     #     return reverse(
