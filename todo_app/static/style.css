@@ -1,7 +1,13 @@
-.list__item {
+.list__item [role=button] {
     background-color: #b9ce59
 }
 
-.list__item.completed {
+.list__item.completed [role=button] {
     background-color: #4bc5c6
+}
+
+.list__item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

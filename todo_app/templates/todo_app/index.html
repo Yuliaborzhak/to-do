@@ -13,25 +13,29 @@
         {% for todo in object_list %}
         <li class="list__item {% if todo.completed%}completed{%endif%}">
             <div class="list__item-inner">
-                <div class="list__item-complete-btn">
-                    {% if todo.completed == False %}
-                    <a
-                        class="btn" 
-                        href="{% url "item-completed" todo.pk %}">
-                        Complete
-                    </a>
-                    {%else%} 
-                    <span>Completed </span>
-                    {%endif%}
-                </div>    
                 <div
                     role="button"
                     onclick="location.href='{% url "item" todo.id %}'"
                    >{{ todo.title }}
                 </div>
-                {% if todo.user %}
-                <span> {{todo.user.username}}</span>
-                {%endif%}
+                <div class="list__item-bottom">
+                    <div class="list__item-complete-btn">
+                        {% if todo.completed == False %}
+                        <a
+                            class="btn" 
+                            href="{% url "item-completed" todo.pk %}">
+                            Complete
+                        </a>
+                        {%else%} 
+                        <span>Completed </span>
+                        {%endif%}
+                    </div>    
+                    
+                    {% if todo.user %}
+                    <span> {{todo.user.username}}</span>
+                    {%endif%}
+                </div>
+                
 
             </div>
             <!-- <div  class="list__item-controls">
