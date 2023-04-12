@@ -6,26 +6,23 @@ from django.db.models import Count
 
 @admin.action(description='Assign unassigned tasks')
 def assign_unassigned_tasks(self, request, queryset):
-    unassigned_tasks = queryset.filter(user__isnull=True).values()
-    users = User.objects.all()
+    unassigned_tasks = queryset.filter(user__isnull=True)
+    users = User.objects.all().exclude(is_superuser=True)
     user_len_combined_list = []
     for user in users:
-        # there is a mistake in getting the number of user tasks + use queryset
-        # q = User.objects.select_related('ToDoItem').annotate(num_toDoItem=Count('tasks'))
+        tasks_count = user.tasks.all().count()
         user_len_list = {
         "name" : user.username,
-        "task_len": user.num_toDoItem 
+        "tasks_num": tasks_count
         }
-        user_len_combined_list.append(user_len)
-    min_value = min(user_len_combined_list, key=itemgetter('task_len'))
-    user_with_min_tasks = min_value.name
-    # unassigned_tasks.username = user_with_min_tasks - something like this
-     
-    print(users)
-    print(user_len_combined_list)
-    print(min_value)
-    print(user_with_min_tasks)
- 
+        user_len_combined_list.append(user_len_list)
+
+    min_value = min(user_len_combined_list, key=itemgetter('tasks_num'))
+    user_with_min_tasks = User.objects.get(username=min_value["name"])
+    
+    for task in unassigned_tasks:
+        user_with_min_tasks.tasks.add(task)
+   
 
 class ToDoItemAdmin(admin.ModelAdmin):
     list_display = ['title', 'user']
