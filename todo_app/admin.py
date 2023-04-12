@@ -26,9 +26,20 @@ def assign_unassigned_tasks(self, request, queryset):
 
 class ToDoItemAdmin(admin.ModelAdmin):
     list_display = ['title', 'user']
+    list_filter = ('user', )
     ordering = ['title']
     actions = [assign_unassigned_tasks]
 
 
+@admin.action(description='Test table')
+def overview_table(self, request, queryset):
+    user = queryset.get(pk=0)
+    print(user)
+class UserAdmin(admin.ModelAdmin):
+    # list_display = ['first_name', 'last_name']
+    actions = [overview_table]
+
 # Register your models here.
 admin.site.register(ToDoItem, ToDoItemAdmin)
+# admin.site.unregister(User)
+# admin.site.register(User, UserAdmin)

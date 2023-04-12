@@ -10,6 +10,7 @@ from django.urls import reverse
 from django import forms
 
 from django.contrib.auth.models import User
+from django.db.models import Avg
 
 def one_week_hence():
     return timezone.now() + timezone.timedelta(days=7)
@@ -26,6 +27,35 @@ def get_superuser():
     if su_user:
         return su_user
     raise DoesNotExist('Please add Super User')  
+
+# def completed_tasks(user):
+#     return user.tasks.filter(completed=True).count()
+
+# def unfinished_tasks(user):
+#     return user.tasks.filter(completed=False).count()
+
+# def after_due_tasks(user):
+#     after_due_tasks = 0
+#     for task in user.tasks:
+#         if task.due_date < timezone.now() & task.completed == False:
+#             after_due_tasks += 1
+    
+#     return after_due_tasks
+
+# def avg_days_to_complete(user):
+#     task.due_date - timezone.now()
+#     Book.objects.aggregate(Avg('price'))
+
+#     user.tasks.filter(completed=True).count()
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # completed_tasks = models.IntegerField(default=completed_tasks(user))
+    # unfinished_tasks = models.IntegerField(default=unfinished_tasks(user))
+    # after_due_tasks = models.IntegerField(default=after_due_tasks(user))
+    # avg_days_to_complete = 
+
+
 
 class ToDoItem(models.Model):
     title = models.CharField(max_length=100)
